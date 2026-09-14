@@ -14,11 +14,14 @@ final class AppNameCache {
     /// cached rather than retried forever.
     private var names: [String: String?] = [:]
 
-    private let resolve: @MainActor (String) -> String?
+    // Not annotated `@MainActor`: storing an explicitly isolated function type
+    // crashed Swift 6.1.2 while generating its reabstraction thunk. The class is
+    // main-actor isolated anyway, so every call already happens there.
+    private let resolve: (String) -> String?
 
     /// The resolver is injectable so tests need not depend on which apps
     /// happen to be installed.
-    init(resolve: @escaping @MainActor (String) -> String? = AppNameCache.lookUpInstalledApp) {
+    init(resolve: @escaping (String) -> String? = AppNameCache.lookUpInstalledApp) {
         self.resolve = resolve
     }
 
@@ -31,7 +34,7 @@ final class AppNameCache {
 
     // MARK: - Resolution
 
-    private static func lookUpInstalledApp(_ bundleID: String) -> String? {
+    nonisolated private static func lookUpInstalledApp(_ bundleID: String) -> String? {
         guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) else {
             return nil
         }
@@ -42,7 +45,10 @@ final class AppNameCache {
 
     /// Drops a trailing ".app"; a blanket replace would mangle a name that
     /// contains it mid-string.
-    static func trimmingAppExtension(_ name: String) -> String {
+    ///
+    /// Pure, so it needs no isolation — and the default resolver that calls it
+    /// is nonisolated.
+    nonisolated static func trimmingAppExtension(_ name: String) -> String {
         name.hasSuffix(".app") ? String(name.dropLast(4)) : name
     }
 }

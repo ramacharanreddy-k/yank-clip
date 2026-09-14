@@ -14,15 +14,15 @@ struct GeneralSettingsView: View {
                             suffix: "clips",
                             range: AppSettings.Limits.rememberCount,
                             step: AppSettings.Steps.rememberCount,
-                            get: { settings.rememberCount },
-                            set: { settings.rememberCount = $0 })
+                            value: Binding(get: { settings.rememberCount },
+                                           set: { settings.rememberCount = $0 }))
 
                 NumberField(title: "Show in menu",
                             suffix: "clips",
                             range: AppSettings.Limits.displayCount,
                             step: AppSettings.Steps.displayCount,
-                            get: { settings.displayCount },
-                            set: { settings.displayCount = $0 })
+                            value: Binding(get: { settings.displayCount },
+                                           set: { settings.displayCount = $0 }))
             }
 
             Section("Options") {

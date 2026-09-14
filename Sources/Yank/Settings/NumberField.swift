@@ -2,6 +2,11 @@ import SwiftUI
 
 /// A labelled row with a typeable number field and a stepper.
 ///
+/// Takes a `Binding` rather than a get/set closure pair. Storing explicitly
+/// `@MainActor` function types as properties crashed Swift 6.1.2 while
+/// generating the reabstraction thunk for them, and a binding is the idiomatic
+/// shape regardless.
+///
 /// The text is committed when editing ends — on return, or when focus leaves —
 /// not on every keystroke. Clamping per keystroke makes a value below the
 /// lower bound impossible to type: entering `15` into a field with a minimum
@@ -11,8 +16,7 @@ struct NumberField: View {
     let suffix: LocalizedStringKey
     let range: ClosedRange<Int>
     let step: Int
-    let get: @MainActor () -> Int
-    let set: @MainActor (Int) -> Void
+    @Binding var value: Int
 
     @ViewState private var text = ""
     @FocusState private var isEditing: Bool
@@ -28,8 +32,6 @@ struct NumberField: View {
     }
 
     var body: some View {
-        let value = get()
-
         LabeledContent(title) {
             HStack(spacing: SettingsMetrics.controlSpacing) {
                 TextField("", text: $text)
@@ -61,16 +63,17 @@ struct NumberField: View {
     /// The stepper writes straight through; its values are in range by
     /// construction.
     private var stepper: Binding<Int> {
-        Binding(get: get, set: { newValue in
-            let clamped = newValue.clamped(to: range)
-            set(clamped)
-            text = String(clamped)
-        })
+        Binding(get: { value },
+                set: { newValue in
+                    let clamped = newValue.clamped(to: range)
+                    value = clamped
+                    text = String(clamped)
+                })
     }
 
     private func commit() {
-        let committed = Self.parse(text, into: range, fallingBackTo: get())
-        set(committed)
+        let committed = Self.parse(text, into: range, fallingBackTo: value)
+        value = committed
         text = String(committed)
     }
 }
