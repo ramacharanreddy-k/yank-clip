@@ -1,0 +1,22 @@
+/* Yank — German. Partial: present to prove localisation resolves, not a
+   complete or reviewed translation. Untranslated keys fall back to English. */
+
+"Search clips" = "Clips durchsuchen";
+"Clear search" = "Suche löschen";
+"No clips yet. Copy something." = "Noch keine Clips. Kopiere etwas.";
+"Recording is paused." = "Aufzeichnung pausiert.";
+"Clear All" = "Alle löschen";
+"Settings…" = "Einstellungen…";
+"Quit" = "Beenden";
+
+"General" = "Allgemein";
+"Appearance" = "Erscheinungsbild";
+"History" = "Verlauf";
+"About" = "Über";
+
+"density.compact" = "Kompakt";
+"density.comfortable" = "Normal";
+"density.roomy" = "Weit";
+
+"count.one" = "1 Clip";
+"count.many" = "%lld Clips";

@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Build and test
+    runs-on: macos-15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          swift --version
+          xcode-select -p
+
+      # make check fails on any warning in Sources/ or Tests/, then runs the
+      # suite. Runners have Xcode, so this also proves the project builds on a
+      # toolchain where @State and the swift-testing plugin resolve normally,
+      # without the Command Line Tools workarounds.
+      - name: make check
+        run: make check
+
+      # Proves the bundle assembles and the icon generator runs, which the
+      # test suite does not cover.
+      - name: Assemble the app bundle
+        run: make release
+
+      - name: Verify the bundle
+        run: |
+          test -x build/Yank.app/Contents/MacOS/Yank
+          test -f build/Yank.app/Contents/Resources/Yank.icns
+          test -f build/Yank.app/Contents/Info.plist
+          /usr/libexec/PlistBuddy -c 'Print :LSUIElement' build/Yank.app/Contents/Info.plist
+          codesign --verify --verbose=1 build/Yank.app

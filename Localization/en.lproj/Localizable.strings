@@ -1,0 +1,89 @@
+/* Yank — English (development language).
+
+   SwiftUI `Text("…")` looks its literal up here automatically, so a missing
+   key falls back to the literal itself. Keys are the English text. */
+
+/* MARK: Dropdown */
+"Search clips" = "Search clips";
+"Clear search" = "Clear search";
+"No clips yet. Copy something." = "No clips yet. Copy something.";
+"Recording is paused." = "Recording is paused.";
+"Clear All" = "Clear All";
+"Settings…" = "Settings…";
+"Quit" = "Quit";
+
+/* MARK: Clip rows */
+"Delete this clip" = "Delete this clip";
+"Delete clip" = "Delete clip";
+"Puts this clip on the clipboard" = "Puts this clip on the clipboard";
+
+/* MARK: Settings tabs */
+"General" = "General";
+"Appearance" = "Appearance";
+"History" = "History";
+"About" = "About";
+
+/* MARK: General tab */
+"Clips" = "Clips";
+"Remember" = "Remember";
+"Show in menu" = "Show in menu";
+"clips" = "clips";
+"Options" = "Options";
+"Record clipboard history" = "Record clipboard history";
+"Launch Yank at login" = "Launch Yank at login";
+
+/* MARK: Appearance tab */
+"Menu" = "Menu";
+"Width" = "Width";
+"Menu width" = "Menu width";
+"Row height" = "Row height";
+"Rows" = "Rows";
+"Show keyboard shortcuts (⌘1–⌘0)" = "Show keyboard shortcuts (⌘1–⌘0)";
+"Show the app each clip came from" = "Show the app each clip came from";
+"Reset to Defaults" = "Reset to Defaults";
+"Changes apply the next time you open the menu." = "Changes apply the next time you open the menu.";
+
+/* Row density names */
+"density.compact" = "Compact";
+"density.comfortable" = "Comfortable";
+"density.roomy" = "Roomy";
+
+/* MARK: History tab */
+"Search all clips" = "Search all clips";
+"No clips stored yet." = "No clips stored yet.";
+/* %@ is the user's search text. */
+"No clips match “%@”." = "No clips match “%@”.";
+"Copy to Clipboard" = "Copy to Clipboard";
+"Delete" = "Delete";
+"Delete Selected" = "Delete Selected";
+
+/* MARK: About tab */
+"History file" = "History file";
+"Show" = "Show";
+"Show the history file in Finder" = "Show the history file in Finder";
+"GitHub" = "GitHub";
+"Report an Issue" = "Report an Issue";
+"Stored on this Mac only, readable by your account alone." = "Stored on this Mac only, readable by your account alone.";
+"app.tagline" = "Menu bar clipboard history with instant search.";
+"app.licence" = "MIT licensed · No permissions required";
+
+/* MARK: Interpolated UI strings. %lld is a number, %@ a phrase. */
+"%lld pt" = "%lld pt";
+"%lld points" = "%lld points";
+"Warning: %@" = "Warning: %@";
+
+/* MARK: Counts. %lld is a clip count. */
+"count.one" = "1 clip";
+"count.many" = "%lld clips";
+"count.shown" = "%1$lld of %2$lld shown";
+"count.selected" = "%1$lld of %2$lld selected";
+"delete.many" = "Delete %lld Clips";
+
+/* MARK: Clip shape. %lld is a count; %@ is an already-formatted phrase. */
+"characters.one" = "1 character";
+"characters.many" = "%lld characters";
+"lines.and.characters" = "%1$lld lines · %2$@";
+
+/* MARK: Errors. %@ is a system error description. */
+"error.read" = "Could not read saved history: %@";
+"error.write" = "Could not save history: %@";

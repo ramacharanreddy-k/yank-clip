@@ -60,3 +60,33 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# ─────────────────────────────────────────────────────────────── Yank
+
+# Real clipboard contents — passwords, tokens, whatever was copied.
+# Never commit.
+history.json
+*.json.bak
+
+# Generated icon assets. Rebuild with:
+#   swift Tools/IconGen.swift Resources
+#   iconutil -c icns Resources/Yank.iconset -o Resources/Yank.icns
+# Source of truth is Tools/IconGen.swift.
+Resources/
+
+# Hand-assembled app bundle (there is no Xcode on this machine)
+build/
+*.app
+
+# Local build spec / agent notes — not part of the shipped project
+CLAUDE.md
+
+# ──────────────────────────────────────────────────────── Toolchain & OS
+
+# SwiftPM local state (Xcode writes this if it is ever installed)
+.swiftpm/
+
+# Editor state (VS Code writes machine-specific workspace paths in here)
+.vscode/
+
+.DS_Store
