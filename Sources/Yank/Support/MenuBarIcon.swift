@@ -12,6 +12,11 @@ extension NSImage {
     ///
     /// Falls back to an SF Symbol when the bundled asset is missing, which is
     /// the case when the binary runs outside the .app.
+    ///
+    /// `@MainActor` because `NSImage` is not `Sendable`: a global holding one
+    /// is not concurrency-safe without isolation. It is only ever read from the
+    /// scene body, which is already on the main actor.
+    @MainActor
     static let yankMenuBarIcon: NSImage = {
         let image = NSImage(named: "MenuBarIcon")
             ?? NSImage(systemSymbolName: "doc.on.clipboard", accessibilityDescription: "Yank")
