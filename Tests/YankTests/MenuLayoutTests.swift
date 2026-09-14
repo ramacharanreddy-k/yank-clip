@@ -7,18 +7,28 @@ import Testing
 struct MenuLayoutTests {
 
     private func height(rows: Int, maximum: Double = 10_000) -> Double {
-        MenuLayout.listHeight(rowCount: rows, rowHeight: 28, spacing: 1,
-                              padding: 5, maxHeight: maximum)
+        MenuLayout.listHeight(rowCount: rows, rowHeight: rowHeight, spacing: spacing,
+                              padding: padding, maxHeight: maximum)
     }
+
+    // Typed explicitly and computed outside the macro: bare numeric literals
+    // inside #expect leave the type checker enumerating overloads, which
+    // Swift 6.1.2 gives up on.
+    private let rowHeight: Double = 28
+    private let spacing: Double = 1
+    private let padding: Double = 5
 
     @Test("one row is one row plus padding")
     func singleRow() {
-        #expect(height(rows: 1) == 28 + 10)
+        let expected = rowHeight + padding * 2
+        #expect(height(rows: 1) == expected)
     }
 
     @Test("rows accumulate with spacing between them, not after the last")
     func manyRows() {
-        #expect(height(rows: 10) == 10 * 28 + 9 * 1 + 10)
+        let rows: Double = 10
+        let expected = rows * rowHeight + (rows - 1) * spacing + padding * 2
+        #expect(height(rows: 10) == expected)
     }
 
     @Test("zero rows never collapses the panel")
